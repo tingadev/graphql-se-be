@@ -6,12 +6,10 @@ type T = User;
 export class UserRepository {
   public reposiory = MysqlDataSource.getRepository(User).extend({
     async getUsers() {
-      return await this.createQueryBuilder("user")
-        .leftJoinAndSelect("user.teamRelation", "teamRelation")
-        .getMany();
+      return await this.createQueryBuilder("user").getMany();
     },
 
-    async findByEmail(email: string): Promise<User | null> {
+    async findByEmail(email: string): Promise<T | null> {
       return await this.findOne({
         where: {
           email: email,
@@ -19,7 +17,7 @@ export class UserRepository {
       });
     },
 
-    async getUser(id: string): Promise<User | null> {
+    async getUser(id: string): Promise<T | null> {
       const user = await this.createQueryBuilder("user")
         .andWhere("user.id = :id", { id })
         .getOne();

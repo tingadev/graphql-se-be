@@ -20,6 +20,11 @@ export class UserResolver {
     });
   }
 
+  @Query((_returns) => [User])
+  public async getUsers(): Promise<User[]> {
+    return await this.userRepository.reposiory.find();
+  }
+
   @Mutation((_returns) => User)
   public async createUser(@Arg("data") data: NewUserInput): Promise<User> {
     return await this.userRepository.reposiory.createUser(data);
