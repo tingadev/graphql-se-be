@@ -1,3 +1,4 @@
+import { DeleteResult } from "typeorm";
 import { MysqlDataSource } from "../..";
 import { NewUserInput, User } from "./entities/User";
 
@@ -30,6 +31,14 @@ export class UserRepository {
       user.lastname = data.lastname;
       user.email = data.email;
       return await this.save(user);
+    },
+
+    async deleteUser(id: string): Promise<DeleteResult> {
+      const user = await this.createQueryBuilder("user")
+        .andWhere("user.id = :id", { id })
+        .delete()
+        .execute();
+      return user;
     },
   });
 }

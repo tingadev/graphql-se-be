@@ -20,6 +20,9 @@ export class User {
   @Column()
   @IsEmail()
   public email!: string;
+
+  @Field((type) => String)
+  protected fullname!: string;
 }
 @InputType()
 export class NewUserInput {
@@ -31,4 +34,25 @@ export class NewUserInput {
 
   @Field()
   public email!: string;
+}
+
+@ObjectType()
+export class NotificationObject {
+  @Field()
+  id!: string;
+
+  @Field({ nullable: true })
+  message?: User;
+
+  @Field((_) => Date)
+  date!: Date;
+
+  @Field()
+  type!: string;
+}
+
+export interface NotificationPayload {
+  id: string;
+  message?: User;
+  type: string;
 }
